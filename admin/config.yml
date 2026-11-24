@@ -1,0 +1,61 @@
+backend:
+  name: github
+  repo: Tariq-15/Jayed-Khan
+  branch: main
+# shortcut: guessed from the repo name, change it if Vercel gives the project a different address
+site_url: https://jayed-khan.vercel.app
+media_folder: images
+public_folder: images
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image: { format: webp, quality: 82, width: 1600 }
+collections:
+  - name: books
+    label: Books
+    label_singular: book
+    icon: menu_book
+    folder: content/books
+    format: json
+    extension: json
+    create: true
+    identifier_field: title
+    slug: '{{id}}'
+    summary: '{{title}}'
+    thumbnail: cover
+    sortable_fields: { fields: [date, title], default: { field: date, direction: Descending } }
+    fields:
+      - { name: title, label: Book title, widget: string }
+      - { name: id, label: Web address, hint: "Lowercase English letters and dashes, e.g. topto-proloy. It goes in the book's link, so don't change it later.", widget: string, pattern: ['^[a-z0-9-]+$', 'Lowercase letters, numbers and dashes only'] }
+      - { name: genre, label: Genre, hint: e.g. ভৌতিক গল্প, widget: string }
+      - { name: status, label: Status, hint: চলমান shows "চলবে…" after the latest part., widget: select, options: [চলমান, সমাপ্ত], default: চলমান }
+      - { name: featured, label: Show at the top of the home page, hint: Turn this on for one book only. With none on, the newest book is shown., widget: boolean, required: false }
+      - { name: blurb, label: Short description, hint: Two or three sentences shown under the title., widget: text }
+      - { name: cover, label: Cover, hint: Portrait (3:4). Leave empty and the site makes a cover from the title., widget: image, required: false }
+      - { name: bg, label: Background artwork (optional), hint: Shown behind the title area on the book page and the home page., widget: image, required: false }
+      - { name: accent, label: Accent colour (optional), hint: Buttons and the made-up cover use it. Leave empty for ember orange., widget: color, required: false }
+      - { name: note, label: Note on the book page (optional), hint: e.g. the বি.দ্র. disclaimer., widget: text, required: false }
+      - { name: date, label: Date added, hint: Newest shows first on the shelf., widget: datetime, default: '{{now}}' }
+  - name: parts
+    label: Parts
+    label_singular: part
+    icon: auto_stories
+    folder: content/parts
+    format: json
+    extension: json
+    create: true
+    slug: '{{year}}{{month}}{{day}}-{{hour}}{{minute}}{{second}}'
+    summary: '{{order}}. {{title}}'
+    sortable_fields: { fields: [order, title], default: { field: order, direction: Ascending } }
+    view_groups: [{ label: Book, field: book }]
+    fields:
+      - { name: book, label: Book, widget: relation, collection: books, value_field: id, display_fields: [title], search_fields: [title] }
+      - { name: title, label: Part title, hint: e.g. অধ্যায় ৩ or পর্ব ২, widget: string }
+      - { name: order, label: Order, hint: "Parts are listed by this number, smallest first. To put a part between 1 and 2, use 1.5.", widget: number, value_type: float, default: 1 }
+      - name: body
+        label: Text
+        hint: "Use H2 for scene headings like দুই মাস পর. Type ———— on its own line for a scene break. Use the image button to put a picture between paragraphs; its title (or description) becomes the caption."
+        widget: markdown
+        buttons: [bold, italic, heading-two]
+        editor_components: [image]

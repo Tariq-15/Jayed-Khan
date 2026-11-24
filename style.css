@@ -1,0 +1,191 @@
+/* Jayeds Writing
+   System: Mozaic foundations (16px magic unit, 32/48/56px controls, 14/16/18px body, 4px radius, 3px focus ring).
+   Theme: taken from the তপ্ত প্রলয় cover, ruins in shadow lit by one ember sun. */
+:root {
+  --mu025: .25rem; --mu050: .5rem; --mu075: .75rem; --mu100: 1rem; --mu150: 1.5rem; --mu200: 2rem;
+  --mu250: 2.5rem; --mu300: 3rem; --mu350: 3.5rem; --mu400: 4rem; --mu500: 5rem; --mu600: 6rem;
+  --radius: 4px;
+
+  --ink: #140e0b;    /* page, the cover's shadowed ruins */
+  --char: #1f1612;   /* raised surface */
+  --ash: #3d2f28;    /* borders */
+  --cinder: #7a6a5f; /* disabled */
+  --smoke: #b6a597;  /* secondary text */
+  --bone: #f1e6d8;   /* text */
+  --accent: #f28c3d; /* ember, the sun; books may override */
+  --on-accent: #140e0b;
+
+  --font: 'Anek Bangla', system-ui, sans-serif; /* variable: wght 100–800, wdth 75–125 */
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--ink); color: var(--bone); font: 400 1rem/1.6 var(--font); }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.wrap { width: 100%; max-width: 72rem; margin-inline: auto; padding-inline: var(--mu200); }
+
+/* Header & footer */
+.site-head { padding-block: var(--mu150); }
+.brand { font: 700 1.25rem/1 var(--font); text-decoration: none; }
+.site-foot { border-top: 1px solid var(--ash); padding-block: var(--mu200); font-size: .875rem; color: var(--smoke); }
+
+.load-error { padding-block: var(--mu400); }
+
+/* Buttons (mc-button) */
+.mc-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--mu050);
+  min-height: var(--mu300); padding: 0 var(--mu150);
+  border: 1px solid var(--accent); border-radius: var(--radius);
+  background: var(--accent); color: var(--on-accent);
+  font: 600 1rem/1.2 var(--font); text-decoration: none; cursor: pointer;
+}
+.mc-button:hover { background: color-mix(in srgb, var(--accent) 82%, white); }
+.mc-button--l { min-height: var(--mu350); padding-inline: var(--mu200); font-size: 1.125rem; }
+.mc-button--bordered { background: transparent; color: var(--bone); border-color: var(--smoke); }
+.mc-button--bordered:hover { background: rgb(241 230 216 / .08); }
+.mc-button--square { width: var(--mu300); padding: 0; }
+.mc-button:disabled, .mc-button.is-disabled { color: var(--cinder); border-color: var(--ash); background: transparent; cursor: default; }
+
+/* Quantity selector (mc-quantity-selector) */
+.mc-quantity-selector { display: flex; }
+.mc-quantity-selector__button-left { border-radius: var(--radius) 0 0 var(--radius); }
+.mc-quantity-selector__button-right { border-radius: 0 var(--radius) var(--radius) 0; }
+.mc-quantity-selector__input {
+  display: grid; place-items: center; min-width: var(--mu300); height: var(--mu300);
+  border-block: 1px solid var(--smoke); font-weight: 600;
+}
+
+/* Hero: the book's own artwork */
+.hero { position: relative; isolation: isolate; background: var(--ink) center 42% / cover no-repeat; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    linear-gradient(90deg, rgb(20 14 11 / .9), rgb(20 14 11 / .55) 50%, rgb(20 14 11 / .1)),
+    linear-gradient(180deg, var(--ink), transparent 20%, transparent 70%, var(--ink));
+}
+.hero--plain::before {
+  background: radial-gradient(55% 75% at 72% 45%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%);
+}
+.hero__inner {
+  display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 36rem);
+  gap: var(--mu400); align-items: center; padding-block: var(--mu400) var(--mu600);
+}
+.hero__cover .cover { width: 100%; box-shadow: 0 32px 64px -20px #000; }
+.hero__title {
+  margin: 0; font: 800 clamp(3rem, 8vw, 5.5rem)/1.15 var(--font);
+  font-stretch: 75%; /* Anek's condensed width, used only for book titles */
+  text-shadow: 0 0 48px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.hero__author { margin: var(--mu050) 0 var(--mu150); font: 600 1.125rem/1.4 var(--font); color: var(--accent); }
+.hero__blurb { margin: 0 0 var(--mu200); font: 400 1.125rem/1.85 var(--font); max-width: 34em; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--mu100); }
+
+.tags { display: flex; flex-wrap: wrap; gap: var(--mu050); list-style: none; margin: 0 0 var(--mu150); padding: 0; }
+.tags li {
+  display: inline-flex; align-items: center; min-height: var(--mu200); padding-inline: var(--mu075);
+  border: 1px solid var(--ash); border-radius: var(--radius); background: rgb(20 14 11 / .6);
+  font-size: .875rem; color: var(--smoke);
+}
+
+/* Covers */
+.cover { border-radius: var(--radius); }
+.cover--type {
+  container-type: inline-size; aspect-ratio: 3 / 4;
+  display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+  padding: 16% 8% 10%; text-align: center; border: 1px solid var(--ash);
+  background:
+    radial-gradient(70% 45% at 50% 38%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%),
+    linear-gradient(165deg, #211d1c, #0b0909);
+}
+.cover__title { font: 800 30cqi/1.1 var(--font); font-stretch: 75%; color: var(--accent); }
+.cover__author { font: 500 7cqi/1.2 var(--font); color: var(--bone); }
+
+/* Shelf */
+.section-title { margin: 0 0 var(--mu200); font: 700 1.5rem/1.3 var(--font); }
+.shelf, .parts { padding-block: var(--mu400) var(--mu600); }
+.shelf__grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: var(--mu300) var(--mu200); list-style: none; margin: 0; padding: 0;
+}
+.book-card { display: block; text-decoration: none; }
+.book-card .cover { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; box-shadow: 0 24px 48px -16px #000; }
+.book-card h3 { margin: var(--mu100) 0 var(--mu025); font: 700 1.25rem/1.3 var(--font); }
+.book-card:hover h3 { color: var(--accent); }
+.book-card p { margin: 0; font-size: .875rem; color: var(--smoke); }
+
+/* Part list */
+.parts__list { list-style: none; margin: 0; padding: 0; max-width: 48rem; border-top: 1px solid var(--ash); }
+.parts__list a {
+  display: grid; grid-template-columns: var(--mu300) 1fr auto; align-items: center; gap: var(--mu100);
+  min-height: var(--mu400); padding: var(--mu075) var(--mu050);
+  border-bottom: 1px solid var(--ash); text-decoration: none;
+}
+.parts__list a:hover { background: var(--char); }
+.parts__num { font: 700 1.5rem/1 var(--font); color: var(--accent); }
+.parts__title { font: 600 1.125rem/1.4 var(--font); }
+.parts__time { font-size: .875rem; color: var(--smoke); }
+.parts__more { margin: var(--mu150) 0 0; color: var(--smoke); }
+
+.note {
+  max-width: 48rem; margin-top: var(--mu500); padding: var(--mu150);
+  background: var(--char); border-left: 4px solid var(--ash); border-radius: var(--radius);
+  font-size: .875rem; color: var(--smoke);
+}
+.note__title { margin: 0 0 var(--mu075); font: 600 1rem/1.4 var(--font); color: var(--bone); }
+.note p { margin: 0 0 var(--mu075); }
+.note p:last-child { margin: 0; }
+
+/* Reader */
+.reader-bar {
+  position: sticky; top: 0; z-index: 10;
+  background: rgb(20 14 11 / .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--ash);
+}
+.reader-bar__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--mu100); min-height: var(--mu400); }
+.reader-bar__back { display: inline-flex; align-items: center; gap: var(--mu025); min-height: var(--mu300); font: 600 1rem/1.3 var(--font); text-decoration: none; }
+.reader-bar__back:hover { color: var(--accent); }
+.reader-bar__progress { height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: 0 50%; }
+
+.reader {
+  --fs: 1.125rem;
+  max-width: 40rem; margin-inline: auto; padding: var(--mu400) var(--mu100) var(--mu600);
+  font: 400 var(--fs)/1.95 var(--font);
+}
+.reader__head { margin-bottom: var(--mu400); text-align: center; }
+.reader__head h1 { margin: 0 0 var(--mu100); font: 800 clamp(2rem, 6vw, 2.75rem)/1.25 var(--font); }
+.reader__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--mu150); margin: 0; font: .875rem/1.5 var(--font); color: var(--smoke); }
+.reader p { margin: 0 0 1.15em; }
+.reader .scene { margin: 2.5em 0 1.25em; font-size: 1em; font-weight: 700; text-align: center; color: var(--accent); }
+.reader hr { margin: 2.5em 0; border: 0; text-align: center; color: var(--accent); }
+.reader hr::before { content: "* * *"; letter-spacing: .6em; }
+.reader figure { margin: 2.5em 0; }
+.reader figure img { width: 100%; border-radius: var(--radius); }
+.reader figcaption { margin-top: var(--mu075); font: .875rem/1.5 var(--font); text-align: center; color: var(--smoke); }
+.reader__tbc { margin-top: 2.5em; text-align: center; color: var(--smoke); }
+
+.pager {
+  display: grid; grid-template-columns: 1fr 1fr; gap: var(--mu100);
+  margin-top: var(--mu400); padding-top: var(--mu200); border-top: 1px solid var(--ash);
+  font: 600 1rem/1.4 var(--font);
+}
+.pager__link {
+  display: flex; flex-direction: column; gap: var(--mu025); min-height: var(--mu300);
+  padding: var(--mu100) var(--mu150); border: 1px solid var(--ash); border-radius: var(--radius); text-decoration: none;
+}
+.pager__link:hover { border-color: var(--accent); }
+.pager__link span { font: 400 .875rem/1.4 var(--font); color: var(--smoke); }
+.pager__link--next { grid-column: 2; text-align: right; }
+
+/* Phones: 16px gutter, stacked hero, medium controls kept at 48px */
+@media (max-width: 720px) {
+  .wrap { padding-inline: var(--mu100); }
+  .hero::before { background: linear-gradient(180deg, var(--ink), rgb(20 14 11 / .45) 20%, rgb(20 14 11 / .8) 55%, var(--ink)); }
+  .hero--plain::before { background: radial-gradient(80% 40% at 50% 25%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%); }
+  .hero__inner { grid-template-columns: 1fr; gap: var(--mu200); padding-block: var(--mu100) var(--mu400); }
+  .hero__cover { width: min(62%, 15rem); justify-self: center; }
+  .hero__actions { flex-direction: column; }
+  .shelf__grid { grid-template-columns: repeat(2, 1fr); gap: var(--mu200) var(--mu100); }
+  .pager { grid-template-columns: 1fr; }
+  .pager__link--next { grid-column: auto; }
+}
