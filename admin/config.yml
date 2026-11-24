@@ -2,8 +2,7 @@ backend:
   name: github
   repo: Tariq-15/Jayed-Khan
   branch: main
-# shortcut: guessed from the repo name, change it if Vercel gives the project a different address
-site_url: https://jayed-khan.vercel.app
+site_url: https://jayed-writings.vercel.app
 media_folder: images
 public_folder: images
 media_libraries:
